@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Surprise ! 🎁</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            background-color: #ffeef2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Background elements - slightly messier animation */
+        .bg-elements {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating {
+            position: absolute;
+            animation: float-up 7s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes float-up {
+            from { bottom: -50px; transform: rotate(0deg); }
+            to { bottom: 110vh; transform: rotate(360deg); }
+        }
+
+        #cadeau-section {
+            text-align: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* The Box - using hardcoded colors */
+        .box {
+            width: 240px;
+            height: 220px;
+            background: #ff4757;
+            position: relative;
+            border-radius: 15px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            animation: bounce 1.5s infinite;
+        }
+
+        .ribbon-v { width: 50px; height: 100%; background: white; position: absolute; left: 95px; }
+        .ribbon-h { width: 100%; height: 50px; background: white; position: absolute; top: 85px; }
+        
+        .bow {
+            position: absolute; width: 70px; height: 70px; background: white;
+            top: -35px; left: 85px; border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        #prank-screen {
+            display: none;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .btn-mcha {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.1s; /* Faster transition feels more human-hacked */
+        }
+
+        #final-card {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 500px;
+            max-width: 90%;
+            z-index: 30;
+            text-align: center;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            background: #fffafa;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            border-left: 5px solid #ff4757;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-elements" id="bg-box"></div>
+
+    <div id="cadeau-section" onclick="startPrank()">
+        <div class="box">
+            <div class="bow"></div>
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+        </div>
+        <h2 style="color: #ff4757;">OPEN YOUR GIFT ! 🎁</h2>
+    </div>
+
+    <div id="prank-screen">
+        <h1 id="status" style="font-size: 3rem; color: #2d3436;">ma warektich mzyan 😂</h1>
+        <button id="gift-btn" class="btn-mcha" onclick="clicBouton()">open your gift! ✨</button>
+    </div>
+
+    <div id="final-card">
+        <h1 style="color: #ff4757;">Happy 18th! 🎂</h1>
+        <pre>
+Happy 18th Birthday! Today is a huge day because you are officially becoming an adult. It is a special day which will only happen once, so make the most of it and enjoy every second.
+
+I want you to know that you are the most amazing girl I’ve ever talked to. You have a truly beautiful soul, and your kindness makes everything better. 
+
+As you turn 18, a whole new world is opening up for you. I wish you nothing but the best in this new chapter. I hope you find success in everything you do and that you stay exactly the person you are today.
+
+<span style="display:block; text-align:center; color:#ff4757; font-weight:bold; font-size:1.5rem;">Happy Birthdayy! ✨</span></pre>
+    </div>
+
+    <script>
+        let compteur = 0;
+        
+        // Background particles
+        const container = document.getElementById('bg-box');
+        const emojies = ['❤️', '✨', '🎈', '🎂'];
+        
+        for(let i=0; i<25; i++) {
+            let el = document.createElement('div');
+            el.className = 'floating';
+            el.innerHTML = emojies[Math.floor(Math.random()*emojies.length)];
+            el.style.left = Math.random()*100 + "vw";
+            el.style.fontSize = (15 + Math.random()*20) + "px";
+            el.style.animationDelay = (Math.random()*5) + "s";
+            container.appendChild(el);
+        }
+
+        function startPrank() {
+            document.getElementById('cadeau-section').style.display = 'none';
+            document.getElementById('prank-screen').style.display = 'block';
+        }
+
+        function clicBouton() {
+            compteur++;
+            const btn = document.getElementById('gift-btn');
+            const txt = document.getElementById('status');
+
+            if (compteur < 6) {
+                // Messages Darija
+                const listMsg = [
+                    "ba9i ma nawyach twrki mzyan ?",
+                    "3aye9ti 😂",
+                    "9arebti ma b9a lk walo 🤣",
+                    "ba9i chwiiaa",
+                    "ba9a whdaa !",
+                ];
+                txt.innerText = listMsg[compteur-1];
+                
+                // Move button randomly
+                let x = Math.random() * (window.innerWidth - 150);
+                let y = Math.random() * (window.innerHeight - 100);
+                
+                btn.style.position = 'absolute';
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+                
+                // Shrink it a bit
+                btn.style.transform = "scale(" + (1 - (compteur * 0.1)) + ")";
+            } else {
+                showFinal();
+            }
+        }
+
+        function showFinal() {
+            document.getElementById('prank-screen').style.display = 'none';
+            document.getElementById('final-card').style.display = 'block';
+            
+            // Simple confetti burst
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            setTimeout(() => {
+                confetti({ particleCount: 100, spread: 100, origin: { x: 0.3 } });
+                confetti({ particleCount: 100, spread: 100, origin: { x: 0.7 } });
+            }, 500);
+        }
+    </script>
+</body>
+</html>
